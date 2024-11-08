@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}Document Summarizer - EduAI Platform{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto">
+    <h1 class="text-3xl font-bold mb-8">Document Summarizer</h1>
+    
+    <div class="card">
+        <form method="POST" enctype="multipart/form-data" onsubmit="showLoading('submitBtn')">
+            <div class="mb-6">
+                <label class="input-label">Upload Document</label>
+                <input type="file" name="file" accept=".txt,.pdf,.doc,.docx" required
+                    class="file-input">
+                <p class="text-sm text-gray-500 mt-1">Supported formats: TXT, PDF, DOC, DOCX</p>
+            </div>
+            
+            <button type="submit" id="submitBtn" class="btn btn-primary">
+                Generate Summary
+            </button>
+        </form>
+    </div>
+    
+    {% if summary %}
+    <div class="card mt-8">
+        <h2 class="text-xl font-semibold mb-4">Generated Summary</h2>
+        <div class="prose max-w-none">
+            {{ summary | safe }}
+        </div>
+        <button onclick="copyToClipboard('summary')" class="btn btn-secondary mt-4">
+            Copy Summary
+        </button>
+    </div>
+    {% endif %}
+</div>
+
+<script>
+function copyToClipboard(elementId) {
+    const text = document.getElementById(elementId).innerText;
+    navigator.clipboard.writeText(text).then(() => {
+        alert('Summary copied to clipboard!');
+    }).catch(err => {
+        console.error('Failed to copy text: ', err);
+    });
+}
+</script>
+{% endblock %}

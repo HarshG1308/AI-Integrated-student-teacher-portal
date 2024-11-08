@@ -1,0 +1,26 @@
+<!-- templates/query-generator.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="query-generator">
+        <h2>Query Generator</h2>
+        <p>Enter text to generate questions for it:</p>
+
+        <!-- Text Input Form -->
+        <form action="/ai-tools/query-generator" method="POST">
+            <textarea name="text" rows="5" required placeholder="Enter text here..."></textarea>
+            <button type="submit" class="submit-btn">Generate Questions</button>
+        </form>
+
+        {% if questions %}
+            <div class="generated-questions">
+                <h3>Generated Questions:</h3>
+                <ul>
+                    {% for question in questions %}
+                        <li>{{ question }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

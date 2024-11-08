@@ -1,0 +1,44 @@
+<!-- templates/ai-tools.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="ai-tools-container">
+        <h1>AI Tools</h1>
+        <p>Explore various AI tools to assist in your learning and academic needs:</p>
+        
+        <!-- AI Tools Cards Section -->
+        <div class="ai-tools-cards">
+            <!-- Document Summarizer Card -->
+            <div class="ai-tool-card">
+                <img src="{{ url_for('static', filename='images/document-summarizer.jpg') }}" alt="Document Summarizer" />
+                <h3>Document Summarizer</h3>
+                <p>Upload a document to get a concise summary.</p>
+                <a href="/ai-tools/document-summarizer" class="btn">Use Now</a>
+            </div>
+
+            <!-- Query Generator Card -->
+            <div class="ai-tool-card">
+                <img src="{{ url_for('static', filename='images/query-generator.jpg') }}" alt="Query Generator" />
+                <h3>Query Generator</h3>
+                <p>Generate questions from the text to test your knowledge.</p>
+                <a href="/ai-tools/query-generator" class="btn">Use Now</a>
+            </div>
+
+            <!-- Image-to-Text Card -->
+            <div class="ai-tool-card">
+                <img src="{{ url_for('static', filename='images/image-to-text.jpg') }}" alt="Image to Text" />
+                <h3>Image to Text</h3>
+                <p>Convert images to text and extract meaningful information.</p>
+                <a href="/ai-tools/image-to-text" class="btn">Use Now</a>
+            </div>
+
+            <!-- Translator Card -->
+            <div class="ai-tool-card">
+                <img src="{{ url_for('static', filename='images/translator.jpg') }}" alt="Translator" />
+                <h3>Translator</h3>
+                <p>Translate text to different languages quickly.</p>
+                <a href="/ai-tools/translator" class="btn">Use Now</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

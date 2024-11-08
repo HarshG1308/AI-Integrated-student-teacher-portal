@@ -1,0 +1,35 @@
+<!-- templates/student_dashboard.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard - Smart Learning</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <div class="navbar">
+        <div class="logo">
+            <h2>Smart Learning</h2>
+        </div>
+        <div class="menu">
+            <a href="/student/dashboard" class="nav-link">Dashboard</a>
+            <a href="/student/assignments" class="nav-link">Assignments</a>
+            <a href="/student/tests" class="nav-link">Tests</a>
+            <a href="/student/ai-tools" class="nav-link">AI Tools</a>
+        </div>
+    </div>
+
+    <div class="content">
+        <h3>Welcome, {{ session['username'] }}!</h3>
+        <p>Here you can manage your assignments, tests, and use AI tools to enhance your learning.</p>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Smart Learning Dashboard | Designed with <i class="fas fa-heart"></i> by Harsh Gautam</p>
+    </footer>
+
+</body>
+</html>

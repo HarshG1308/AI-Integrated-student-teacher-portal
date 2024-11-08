@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}AI-Enhanced Learning Platform{% endblock %}</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="bg-gray-100">
+    <nav class="bg-blue-600 text-white p-4">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="{{ url_for('home') }}" class="text-xl font-bold">EduAI Platform</a>
+            <div class="space-x-4">
+                {% if 'username' in session %}
+                    {% if session['role'] == 'teacher' %}
+                        <a href="{{ url_for('teacher_dashboard') }}" class="hover:text-gray-200">Dashboard</a>
+                        <a href="{{ url_for('assignments') }}" class="hover:text-gray-200">Assignments</a>
+                        <a href="{{ url_for('tests') }}" class="hover:text-gray-200">Tests</a>
+                    {% else %}
+                        <a href="{{ url_for('student_dashboard') }}" class="hover:text-gray-200">Dashboard</a>
+                    {% endif %}
+                    <a href="{{ url_for('ai_tools') }}" class="hover:text-gray-200">AI Tools</a>
+                    <a href="{{ url_for('logout') }}" class="hover:text-gray-200">Logout</a>
+                {% else %}
+                    <a href="{{ url_for('login') }}" class="hover:text-gray-200">Login</a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mx-auto mt-8 px-4">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mb-4" role="alert">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+    </div>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+{% block title %}Query Generator - EduAI Platform{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto">
+    <h1 class="text-3xl font-bold mb-8">Query Generator</h1>
+    
+    <div class="card">
+        <form method="POST" onsubmit="showLoading('submitBtn')">
+            <div class="mb-6">
+                <label for="text" class="input-label">Enter Educational Content</label>
+                <textarea id="text" name="text" rows="6" required
+                    class="form-input"
+                    placeholder="Paste your educational content here..."></textarea>
+            </div>
+            
+            <div class="mb-6">
+                <label for="questionType" class="input-label">Question Type</label>
+                <select id="questionType" name="questionType" class="form-input">
+                    <option value="multiple_choice">Multiple Choice</option>
+                    <option value="open_ended">Open Ended</option>
+                    <option value="true_false">True/False</option>
+                </select>
+            </div>
+            
+            <div class="mb-6">
+                <label for="difficulty" class="input-label">Difficulty Level</label>
+                <select id="difficulty" name="difficulty" class="form-input">
+                    <option value="basic">Basic</option>
+                    <option value="intermediate">Intermediate</option>
+                    <option value="advanced">Advanced</option>
+                </select>
+            </div>
+            
+            <button type="submit" id="submitBtn" class="btn btn-primary">
+                Generate Questions
+            </button>
+        </form>
+    </div>
+    
+    {% if questions %}
+    <div class="card mt-8">
+        <h2 class="text-xl font-semibold mb-4">Generated Questions</h2>
+        <div class="space-y-4" id="questionsList">
+            {% for question in questions %}
+            <div class="bg-gray-50 p-4 rounded-md">
+                {{ question }}
+            </div>
+            {% endfor %}
+        </div>
+        <div class="mt-4 space-x-4">
+            <button onclick="copyQuestions()" class="btn btn-secondary">
+                Copy All Questions
+            </button>
+            <button onclick="downloadQuestions()" class="btn btn-secondary">
+                Download Questions
+            </button>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+<script>
+function copyQuestions() {
+    const questions = Array.from(document.querySelectorAll('#questionsList > div'))
+        .map(div => div.innerText)
+        .join('\n\n');
+    navigator.clipboard.writeText(questions).then(() => {
+        alert('Questions copied to clipboard!');
+    }).catch(err => {
+        console.error('Failed to copy questions: ', err);
+    });
+}
+
+function downloadQuestions() {
+    const questions = Array.from(document.querySelectorAll('#questionsList > div'))
+        .map(div => div.innerText)
+        .join('\n\n');
+    const blob = new Blob([questions], { type: 'text/plain' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'generated_questions.txt';
+    a.click();
+    window.URL.revokeObjectURL(url);
+}
+</script>
+{% endblock %}

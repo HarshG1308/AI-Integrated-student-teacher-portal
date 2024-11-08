@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block title %}Translator - EduAI Platform{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto">
+    <h1 class="text-3xl font-bold mb-8">AI Translator</h1>
+    
+    <div class="card">
+        <form method="POST" onsubmit="showLoading('submitBtn')">
+            <div class="mb-6">
+                <label for="text" class="input-label">Text to Translate</label>
+                <textarea id="text" name="text" rows="6" required
+                    class="form-input"
+                    placeholder="Enter text to translate..."></textarea>
+            </div>
+            
+            <div class="mb-6">
+                <label for="target_language" class="input-label">Target Language</label>
+                <select id="target_language" name="target_language" class="form-input" required>
+                    <option value="">Select language...</option>
+                    <option value="Spanish">Spanish</option>
+                    <option value="French">French</option>
+                    <option value="German">German</option>
+                    <option value="Italian">Italian</option>
+                    <option value="Portuguese">Portuguese</option>
+                    <option value="Chinese">Chinese</option>
+                    <option value="Japanese">Japanese</option>
+                    <option value="Korean">Korean</option>
+                    <option value="Russian">Russian</option>
+                    <option value="Arabic">Arabic</option>
+                </select>
+            </div>
+            
+            <button type="submit" id="submitBtn" class="btn btn-primary">
+                Translate Text
+            </button>
+        </form>
+    </div>
+    
+    {% if translated_text %}
+    <div class="card mt-8">
+        <h2 class="text-xl font-semibold mb-4">Translated Text</h2>
+        <div class="prose max-w-none bg-gray-50 p-4 rounded-md" id="translatedText">
+            {{ translated_text }}
+        </div>
+        <div class="mt-4 space-x-4">
+            <button onclick="copyToClipboard('translatedText')" class="btn btn-secondary">
+                Copy Translation
+            </button>
+            <button onclick="downloadTranslation()" class="btn btn-secondary">
+                Download Translation
+            </button>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+<script>
+function copyToClipboard(elementId) {
+    const text = document.getElementById(elementId).innerText;
+    navigator.clipboard.writeText(text).then(() => {
+        alert('Translation copied to clipboard!');
+    }).catch(err => {
+        console.error('Failed to copy text: ', err);
+    });
+}
+
+function downloadTranslation() {
+    const text = document.getElementById('translatedText').innerText;
+    const blob = new Blob([text], { type: 'text/plain' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'translated_text.txt';
+    a.click();
+    window.URL.revokeObjectURL(url);
+}
+</script>
+{% endblock %}
